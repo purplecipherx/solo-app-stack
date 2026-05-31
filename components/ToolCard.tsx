@@ -8,11 +8,16 @@ export function ToolCard({tool}: {tool: Tool}) {
   return (
     <article className="rounded-md border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm">
       <div className="flex items-start justify-between gap-3">
-        <div>
+        <div className="flex items-start gap-3">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-[#efe8da] text-lg font-black text-[var(--ink)]">
+            {tool.name.slice(0, 2).toUpperCase()}
+          </div>
+          <div>
           <h3 className="text-xl font-black text-[var(--ink)]">
             <Link href={`/tools/${tool.slug}`} className="hover:text-[var(--accent-dark)]">{tool.name}</Link>
           </h3>
           <p className="mt-1 text-sm font-bold text-[var(--accent-dark)]">Best for: {tool.bestFor}</p>
+          </div>
         </div>
         <RatingBadge score={tool.ratings.overallScore} />
       </div>

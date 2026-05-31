@@ -36,10 +36,11 @@ export default async function HomePage() {
         </section>
         <section>
           <h2 className="mb-5 text-2xl font-black text-[var(--ink)]">Best software lists</h2>
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className="grid gap-3 md:grid-cols-3">
             {headlines.map((headline) => (
-              <Link key={headline} href="/blog" className="rounded-md border border-[var(--line)] bg-[var(--card)] p-4 font-black text-[var(--ink)] hover:border-[var(--accent)]">
-                {headline}
+              <Link key={headline} href="/blog" className="overflow-hidden rounded-md border border-[var(--line)] bg-[var(--card)] font-black text-[var(--ink)] shadow-sm transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-md">
+                <span className="block h-2 bg-[var(--accent)]" />
+                <span className="block p-4">{headline}</span>
               </Link>
             ))}
           </div>

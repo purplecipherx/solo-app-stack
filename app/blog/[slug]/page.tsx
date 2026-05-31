@@ -48,14 +48,21 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
       <Breadcrumbs items={[{label: "Blog", href: "/blog"}, {label: post.title, href: `/blog/${post.slug}`}]} />
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_280px]">
         <div>
-          <div className="text-sm font-bold uppercase tracking-normal text-[var(--accent-dark)]">{post.category}</div>
-          <h1 className="mt-3 text-4xl font-black leading-tight text-[var(--ink)] md:text-5xl">{post.title}</h1>
-          <p className="mt-4 text-lg leading-8 text-[var(--muted)]">{post.excerpt}</p>
-          <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold text-[var(--muted)]">
-            <span>By {post.author.name}</span>
-            <span>Published {formatDate(post.publishedAt)}</span>
-            <LastUpdated date={post.updatedAt} />
-            <span>{post.readingTime}</span>
+          <div className="overflow-hidden rounded-md border border-[var(--line)] bg-[var(--card)] shadow-sm">
+            <div className="relative min-h-56 bg-[var(--ink)] p-6 text-white md:p-8">
+              <div className="absolute inset-0 opacity-30" style={{backgroundImage: "radial-gradient(circle at 20% 20%, #f6c453 0, transparent 24%), radial-gradient(circle at 80% 30%, #c44524 0, transparent 20%), linear-gradient(135deg, #12312b, #315f72)"}} />
+              <div className="relative">
+                <div className="text-sm font-black uppercase tracking-normal text-[#f6c453]">{post.category}</div>
+                <h1 className="mt-3 max-w-3xl text-4xl font-black leading-tight md:text-5xl">{post.title}</h1>
+                <p className="mt-4 max-w-3xl text-lg leading-8 text-[#edf5ef]">{post.excerpt}</p>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 border-t border-[var(--line)] p-5 text-sm font-semibold text-[var(--muted)]">
+              <span>By {post.author.name}</span>
+              <span>Published {formatDate(post.publishedAt)}</span>
+              <LastUpdated date={post.updatedAt} />
+              <span>{post.readingTime}</span>
+            </div>
           </div>
           <div className="mt-6"><AffiliateDisclosure /></div>
           <div className="mt-8"><RenderBody body={post.body} /></div>
