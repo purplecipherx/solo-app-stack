@@ -13,21 +13,21 @@ export const categoryImages: Record<string, {src: string; alt: string}> = {
 };
 
 const postImages: Record<string, {src: string; alt: string}> = {
-  "best-ai-tools-for-one-person-businesses": {src: "/images/tools/chatgpt-review.webp", alt: "AI assistant tools workspace for one-person businesses"},
-  "best-ai-email-assistants-for-freelancers": {src: "/images/tools/chatgpt-review.webp", alt: "AI email assistant product workspace for freelancers"},
-  "chatgpt-vs-claude-for-solo-operators": {src: "/images/tools/chatgpt-review.webp", alt: "AI assistant comparison workspace for ChatGPT and Claude"},
-  "best-scheduling-apps-for-solo-service-businesses": {src: "/images/tools/calendly-review.webp", alt: "Scheduling app comparison workspace for solo service businesses"},
-  "calendly-vs-acuity-for-service-pros": {src: "/images/tools/calendly-review.webp", alt: "Calendly and Acuity scheduling comparison workspace"},
-  "cheap-booking-stack-for-mobile-local-businesses": {src: "/images/tools/calendly-review.webp", alt: "Booking and scheduling product workspace for mobile local businesses"},
-  "best-mileage-tracker-apps-for-gig-workers": {src: "/images/tools/everlance-review.webp", alt: "Mileage tracker app workspace for gig workers"},
-  "best-tax-apps-for-side-hustlers": {src: "/images/tools/everlance-review.webp", alt: "Tax and mileage tracking product workspace for side hustlers"},
-  "mileiq-vs-everlance-for-drivers": {src: "/images/tools/everlance-review.webp", alt: "Mileage app comparison workspace for drivers"},
-  "best-invoicing-software-for-freelancers": {src: "/images/tools/freshbooks-review.webp", alt: "Invoicing software workspace for freelancers"},
-  "wave-vs-freshbooks-for-solo-operators": {src: "/images/tools/freshbooks-review.webp", alt: "Wave and FreshBooks invoicing comparison workspace"},
-  "cheapest-payment-stack-for-one-person-businesses": {src: "/images/tools/freshbooks-review.webp", alt: "Payment and invoicing product workspace for one-person businesses"},
-  "best-website-builders-for-local-service-businesses": {src: "/images/tools/carrd-review.webp", alt: "Website builder workspace for local service businesses"},
-  "best-cheap-crm-for-solo-operators": {src: "/images/tools/carrd-review.webp", alt: "Website and lead tracking product workspace for solo operators"},
-  "website-builder-vs-wordpress-for-solo-service-businesses": {src: "/images/tools/carrd-review.webp", alt: "Website builder and WordPress comparison workspace"}
+  "best-ai-tools-for-one-person-businesses": {src: "/images/posts/best-ai-tools-for-one-person-businesses.webp", alt: "Unique cover for best AI tools for one-person businesses"},
+  "best-ai-email-assistants-for-freelancers": {src: "/images/posts/best-ai-email-assistants-for-freelancers.webp", alt: "Unique cover for AI email assistants for freelancers"},
+  "chatgpt-vs-claude-for-solo-operators": {src: "/images/posts/chatgpt-vs-claude-for-solo-operators.webp", alt: "Unique cover for ChatGPT versus Claude for solo operators"},
+  "best-scheduling-apps-for-solo-service-businesses": {src: "/images/posts/best-scheduling-apps-for-solo-service-businesses.webp", alt: "Unique cover for scheduling apps for solo service businesses"},
+  "calendly-vs-acuity-for-service-pros": {src: "/images/posts/calendly-vs-acuity-for-service-pros.webp", alt: "Unique cover for Calendly versus Acuity for service pros"},
+  "cheap-booking-stack-for-mobile-local-businesses": {src: "/images/posts/cheap-booking-stack-for-mobile-local-businesses.webp", alt: "Unique cover for cheap booking stacks for mobile local businesses"},
+  "best-mileage-tracker-apps-for-gig-workers": {src: "/images/posts/best-mileage-tracker-apps-for-gig-workers.webp", alt: "Unique cover for mileage tracker apps for gig workers"},
+  "best-tax-apps-for-side-hustlers": {src: "/images/posts/best-tax-apps-for-side-hustlers.webp", alt: "Unique cover for tax apps for side hustlers"},
+  "mileiq-vs-everlance-for-drivers": {src: "/images/posts/mileiq-vs-everlance-for-drivers.webp", alt: "Unique cover for MileIQ versus Everlance for drivers"},
+  "best-invoicing-software-for-freelancers": {src: "/images/posts/best-invoicing-software-for-freelancers.webp", alt: "Unique cover for invoicing software for freelancers"},
+  "wave-vs-freshbooks-for-solo-operators": {src: "/images/posts/wave-vs-freshbooks-for-solo-operators.webp", alt: "Unique cover for Wave versus FreshBooks for solo operators"},
+  "cheapest-payment-stack-for-one-person-businesses": {src: "/images/posts/cheapest-payment-stack-for-one-person-businesses.webp", alt: "Unique cover for cheapest payment stack for one-person businesses"},
+  "best-website-builders-for-local-service-businesses": {src: "/images/posts/best-website-builders-for-local-service-businesses.webp", alt: "Unique cover for website builders for local service businesses"},
+  "best-cheap-crm-for-solo-operators": {src: "/images/posts/best-cheap-crm-for-solo-operators.webp", alt: "Unique cover for cheap CRM for solo operators"},
+  "website-builder-vs-wordpress-for-solo-service-businesses": {src: "/images/posts/website-builder-vs-wordpress-for-solo-service-businesses.webp", alt: "Unique cover for website builder versus WordPress for solo service businesses"}
 };
 
 export const categories: Category[] = [
