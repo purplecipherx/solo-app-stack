@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-[var(--line)] bg-[#f4efe4]">
       <Image
-        src="/images/solo-workspace-hero.png"
+        src="/images/solo-workspace-hero.webp"
         alt="Solo business software workspace with laptop, phone, invoices, and app dashboards"
         fill
         priority

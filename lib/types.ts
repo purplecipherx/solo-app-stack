@@ -18,6 +18,9 @@ export type Tool = {
   name: string;
   slug: string;
   logo?: string;
+  logoUrl?: string;
+  image?: string;
+  imageAlt?: string;
   shortDescription: string;
   bestFor: string;
   pricingSummary: string;
@@ -54,6 +57,8 @@ export type Post = {
   seoTitle: string;
   metaDescription: string;
   excerpt: string;
+  featuredImage?: string;
+  featuredImageAlt?: string;
   category: string;
   tags: string[];
   author: Author;

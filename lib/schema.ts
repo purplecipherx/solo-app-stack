@@ -23,8 +23,9 @@ export function blogPostingJsonLd(post: Post) {
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
     author: {"@type": "Person", name: post.author.name},
-    publisher: {"@type": "Organization", name: site.name},
-    mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`)
+    publisher: {"@type": "Organization", name: site.name, url: site.url},
+    mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
+    image: post.featuredImage ? [absoluteUrl(post.featuredImage)] : undefined
   };
 }
 
@@ -34,7 +35,10 @@ export function softwareJsonLd(tool: Tool) {
     "@type": "SoftwareApplication",
     name: tool.name,
     description: tool.shortDescription,
+    url: absoluteUrl(`/tools/${tool.slug}`),
     applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    image: tool.image ? absoluteUrl(tool.image) : undefined,
     offers: {"@type": "Offer", price: tool.startingPrice || tool.pricingSummary, url: tool.directUrl},
     aggregateRating: {
       "@type": "AggregateRating",

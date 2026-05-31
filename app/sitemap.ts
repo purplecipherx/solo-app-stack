@@ -7,9 +7,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = ["", "/blog", "/categories", "/tools", "/comparisons", "/toolkit", "/start-here", "/about", "/contact", "/privacy", "/terms", "/affiliate-disclosure"];
   return [
     ...staticPages.map((path) => ({url: absoluteUrl(path), lastModified: new Date()})),
-    ...posts.map((post) => ({url: absoluteUrl(`/blog/${post.slug}`), lastModified: new Date(post.updatedAt)})),
+    ...posts.map((post) => ({
+      url: absoluteUrl(`/blog/${post.slug}`),
+      lastModified: new Date(post.updatedAt),
+      images: post.featuredImage ? [absoluteUrl(post.featuredImage)] : undefined
+    })),
     ...categories.map((category) => ({url: absoluteUrl(`/categories/${category.slug}`), lastModified: new Date()})),
-    ...tools.map((tool) => ({url: absoluteUrl(`/tools/${tool.slug}`), lastModified: new Date(tool.updatedAt)})),
+    ...tools.map((tool) => ({
+      url: absoluteUrl(`/tools/${tool.slug}`),
+      lastModified: new Date(tool.updatedAt),
+      images: tool.image ? [absoluteUrl(tool.image)] : undefined
+    })),
     ...comparisons.map((comparison) => ({url: absoluteUrl(`/comparisons/${comparison.slug}`), lastModified: new Date(comparison.updatedAt)}))
   ];
 }

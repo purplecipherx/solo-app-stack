@@ -11,6 +11,7 @@ export const post = defineType({
     defineField({name: "metaDescription", type: "text", validation: (Rule) => Rule.max(160)}),
     defineField({name: "excerpt", type: "text"}),
     defineField({name: "featuredImage", type: "image", options: {hotspot: true}}),
+    defineField({name: "featuredImageAlt", type: "string"}),
     defineField({name: "author", type: "reference", to: [{type: "author"}]}),
     defineField({name: "category", type: "reference", to: [{type: "category"}]}),
     defineField({name: "tags", type: "array", of: [{type: "string"}]}),

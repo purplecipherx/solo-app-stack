@@ -1,4 +1,5 @@
 import type {Metadata} from "next";
+import Image from "next/image";
 import {notFound} from "next/navigation";
 import {AffiliateDisclosure} from "@/components/AffiliateDisclosure";
 import {Breadcrumbs} from "@/components/Breadcrumbs";
@@ -29,8 +30,14 @@ export async function generateMetadata({params}: {params: Promise<{slug: string}
     description: post.metaDescription,
     alternates: {canonical: post.canonicalUrl || absoluteUrl(`/blog/${post.slug}`)},
     robots: post.noindex ? {index: false, follow: false} : undefined,
-    openGraph: {title: post.seoTitle, description: post.metaDescription, type: "article", url: `/blog/${post.slug}`},
-    twitter: {card: "summary_large_image", title: post.seoTitle, description: post.metaDescription}
+    openGraph: {
+      title: post.seoTitle,
+      description: post.metaDescription,
+      type: "article",
+      url: `/blog/${post.slug}`,
+      images: post.featuredImage ? [{url: post.featuredImage, alt: post.featuredImageAlt || post.title}] : undefined
+    },
+    twitter: {card: "summary_large_image", title: post.seoTitle, description: post.metaDescription, images: post.featuredImage ? [post.featuredImage] : undefined}
   };
 }
 
@@ -49,8 +56,11 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_280px]">
         <div>
           <div className="overflow-hidden rounded-md border border-[var(--line)] bg-[var(--card)] shadow-sm">
-            <div className="relative min-h-56 bg-[var(--ink)] p-6 text-white md:p-8">
-              <div className="absolute inset-0 opacity-30" style={{backgroundImage: "radial-gradient(circle at 20% 20%, #f6c453 0, transparent 24%), radial-gradient(circle at 80% 30%, #c44524 0, transparent 20%), linear-gradient(135deg, #12312b, #315f72)"}} />
+            <div className="relative min-h-72 bg-[var(--ink)] p-6 text-white md:p-8">
+              {post.featuredImage ? (
+                <Image src={post.featuredImage} alt={post.featuredImageAlt || post.title} fill priority className="object-cover" sizes="(min-width: 1024px) 760px, 100vw" />
+              ) : null}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/42 to-black/10" />
               <div className="relative">
                 <div className="text-sm font-black uppercase tracking-normal text-[#f6c453]">{post.category}</div>
                 <h1 className="mt-3 max-w-3xl text-4xl font-black leading-tight md:text-5xl">{post.title}</h1>

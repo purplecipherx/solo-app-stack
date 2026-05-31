@@ -1,4 +1,5 @@
 import type {Metadata} from "next";
+import Image from "next/image";
 import {notFound} from "next/navigation";
 import {AffiliateDisclosure} from "@/components/AffiliateDisclosure";
 import {Breadcrumbs} from "@/components/Breadcrumbs";
@@ -18,7 +19,13 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({params}: {params: Promise<{slug: string}>}): Promise<Metadata> {
   const tool = await getTool((await params).slug);
-  return tool ? {title: `${tool.name} Review`, description: tool.shortDescription} : {};
+  return tool ? {
+    title: `${tool.name} Review`,
+    description: tool.shortDescription,
+    alternates: {canonical: `/tools/${tool.slug}`},
+    openGraph: {title: `${tool.name} Review`, description: tool.shortDescription, images: tool.image ? [{url: tool.image, alt: tool.imageAlt || `${tool.name} review`}] : undefined},
+    twitter: {card: "summary_large_image", title: `${tool.name} Review`, description: tool.shortDescription, images: tool.image ? [tool.image] : undefined}
+  } : {};
 }
 
 export default async function ToolPage({params}: {params: Promise<{slug: string}>}) {
@@ -34,11 +41,24 @@ export default async function ToolPage({params}: {params: Promise<{slug: string}
         <div>
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h1 className="text-4xl font-black text-[var(--ink)]">{tool.name}</h1>
+              <div className="flex items-center gap-3">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-[#efe8da]">
+                  {tool.logoUrl ? <img src={tool.logoUrl} alt={`${tool.name} logo`} className="h-9 w-9 rounded" /> : null}
+                </div>
+                <h1 className="text-4xl font-black text-[var(--ink)]">{tool.name}</h1>
+              </div>
               <p className="mt-3 max-w-2xl text-lg leading-8 text-[var(--muted)]">{tool.shortDescription}</p>
             </div>
             <RatingBadge score={tool.ratings.overallScore} />
           </div>
+          {tool.image ? (
+            <div className="relative mt-6 aspect-[16/9] overflow-hidden rounded-md border border-[var(--line)] bg-[#efe8da]">
+              <Image src={tool.image} alt={tool.imageAlt || `${tool.name} product review image`} fill priority className="object-cover" sizes="(min-width: 1024px) 760px, 100vw" />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-5">
+                <span className="inline-flex rounded-md bg-white px-3 py-1 text-sm font-black text-[var(--ink)]">{tool.name} review</span>
+              </div>
+            </div>
+          ) : null}
           <div className="mt-6 grid gap-4 rounded-md border border-[var(--line)] bg-[var(--card)] p-5 md:grid-cols-2">
             <p><strong>Best for:</strong> {tool.bestFor}</p>
             <p><strong>Pricing:</strong> {tool.pricingSummary}</p>

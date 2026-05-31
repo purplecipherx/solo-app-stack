@@ -2,6 +2,16 @@ import type {Category, Comparison, Post, ToolkitItem, Tool} from "./types";
 
 const author = {name: "Solo App Stack Editorial", role: "Tool testing and buyer guides"};
 
+const categoryImages: Record<string, {src: string; alt: string}> = {
+  "AI Tools": {src: "/images/posts/ai-tools-cover.webp", alt: "AI assistant workspace for a one-person business"},
+  "Scheduling & Booking": {src: "/images/posts/scheduling-cover.webp", alt: "Scheduling app workspace with calendar and booking tools"},
+  "Taxes & Mileage": {src: "/images/posts/mileage-tax-cover.webp", alt: "Mileage tracking and tax app workspace for gig workers"},
+  "Invoicing & Payments": {src: "/images/posts/invoicing-payments-cover.webp", alt: "Freelancer invoicing and payment software workspace"},
+  "Websites & Hosting": {src: "/images/posts/website-crm-cover.webp", alt: "Website builder and CRM workspace for local service businesses"},
+  "Business Apps": {src: "/images/posts/website-crm-cover.webp", alt: "CRM and lead tracking workspace for solo operators"},
+  "Reviews & Comparisons": {src: "/images/posts/ai-tools-cover.webp", alt: "Software comparison workspace for solo operators"}
+};
+
 export const categories: Category[] = [
   {title: "AI Tools", slug: "ai-tools", description: "AI writing, research, automation, and assistant tools for solo work."},
   {title: "Business Apps", slug: "business-apps", description: "Simple operating software for freelancers and one-person businesses."},
@@ -19,6 +29,9 @@ export const tools: Tool[] = [
   {
     name: "ChatGPT",
     slug: "chatgpt",
+    logoUrl: "https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128",
+    image: "/images/tools/chatgpt-review.webp",
+    imageAlt: "AI assistant product review workspace for ChatGPT",
     shortDescription: "General-purpose AI assistant for writing, planning, coding, research, and operations.",
     bestFor: "Solo operators who need a flexible daily AI assistant",
     pricingSummary: "Free plan available; paid plans add stronger models and higher limits.",
@@ -38,6 +51,9 @@ export const tools: Tool[] = [
   {
     name: "Calendly",
     slug: "calendly",
+    logoUrl: "https://www.google.com/s2/favicons?domain=calendly.com&sz=128",
+    image: "/images/tools/calendly-review.webp",
+    imageAlt: "Scheduling product review workspace for Calendly",
     shortDescription: "Scheduling pages, calendar rules, reminders, and booking links for appointments.",
     bestFor: "Freelancers and service businesses that book calls or appointments",
     pricingSummary: "Free basic scheduling; paid plans add routing, teams, and automations.",
@@ -57,6 +73,9 @@ export const tools: Tool[] = [
   {
     name: "FreshBooks",
     slug: "freshbooks",
+    logoUrl: "https://www.google.com/s2/favicons?domain=freshbooks.com&sz=128",
+    image: "/images/tools/freshbooks-review.webp",
+    imageAlt: "Invoicing product review workspace for FreshBooks",
     shortDescription: "Invoicing and light accounting software built for freelancers and small service businesses.",
     bestFor: "Freelancers who want polished invoices and client billing",
     pricingSummary: "Paid plans; often discounted for new users.",
@@ -76,6 +95,9 @@ export const tools: Tool[] = [
   {
     name: "Everlance",
     slug: "everlance",
+    logoUrl: "https://www.google.com/s2/favicons?domain=everlance.com&sz=128",
+    image: "/images/tools/everlance-review.webp",
+    imageAlt: "Mileage tracking product review workspace for Everlance",
     shortDescription: "Mileage and expense tracking app for drivers, contractors, and self-employed workers.",
     bestFor: "Gig workers who need automatic mileage logs",
     pricingSummary: "Free tier available; paid plans unlock more automatic tracking and reports.",
@@ -95,6 +117,9 @@ export const tools: Tool[] = [
   {
     name: "Carrd",
     slug: "carrd",
+    logoUrl: "https://www.google.com/s2/favicons?domain=carrd.co&sz=128",
+    image: "/images/tools/carrd-review.webp",
+    imageAlt: "Website builder product review workspace for Carrd",
     shortDescription: "Low-cost one-page website builder for simple landing pages, service pages, and link hubs.",
     bestFor: "Solo operators who need a fast, cheap web presence",
     pricingSummary: "Free plan available; Pro plans are low cost.",
@@ -137,6 +162,8 @@ export const posts: Post[] = postPlan.map(([slug, title, category, toolNames], i
   seoTitle: `${title} | Solo App Stack`,
   metaDescription: `A practical, beginner-friendly guide to ${title.toLowerCase()} with picks, tradeoffs, pricing notes, and setup advice for solo operators.`,
   excerpt: `A no-fluff buyer guide for solo operators comparing ${toolNames.join(", ")} and the situations where each one makes sense.`,
+  featuredImage: categoryImages[category]?.src || "/images/posts/website-crm-cover.webp",
+  featuredImageAlt: categoryImages[category]?.alt || "Software stack workspace for solo operators",
   category,
   tags: [category, "solo business", "software stack"],
   author,

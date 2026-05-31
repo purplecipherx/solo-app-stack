@@ -15,7 +15,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({params}: {params: Promise<{slug: string}>}): Promise<Metadata> {
   const comparison = await getComparison((await params).slug);
-  return comparison ? {title: comparison.seoTitle, description: comparison.metaDescription} : {};
+  return comparison ? {title: comparison.seoTitle, description: comparison.metaDescription, alternates: {canonical: `/comparisons/${comparison.slug}`}} : {};
 }
 
 export default async function ComparisonPage({params}: {params: Promise<{slug: string}>}) {

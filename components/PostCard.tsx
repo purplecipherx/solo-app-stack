@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {ArrowUpRight, Clock} from "lucide-react";
 import {formatDate} from "@/lib/utils";
@@ -17,12 +18,18 @@ const categoryStyles: Record<string, string> = {
 export function PostCard({post}: {post: Post}) {
   return (
     <article className="overflow-hidden rounded-md border border-[var(--line)] bg-[var(--card)] shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-      <div className={`${categoryStyles[post.category] || "bg-[#efe8da] text-[var(--ink)]"} flex min-h-24 items-end justify-between gap-4 p-4`}>
-        <div>
-          <p className="text-xs font-black uppercase tracking-normal opacity-90">{post.category}</p>
-          <p className="mt-1 text-sm font-bold">Updated {formatDate(post.updatedAt)}</p>
+      <div className="relative aspect-[16/9] overflow-hidden">
+        {post.featuredImage ? (
+          <Image src={post.featuredImage} alt={post.featuredImageAlt || post.title} fill className="object-cover transition duration-300 hover:scale-105" sizes="(min-width: 768px) 33vw, 100vw" />
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/18 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 text-white">
+          <div>
+            <p className={`inline-flex rounded-md px-2 py-1 text-xs font-black uppercase tracking-normal ${categoryStyles[post.category] || "bg-[#efe8da] text-[var(--ink)]"}`}>{post.category}</p>
+            <p className="mt-2 text-sm font-bold">Updated {formatDate(post.updatedAt)}</p>
+          </div>
+          <ArrowUpRight size={22} />
         </div>
-        <ArrowUpRight size={22} />
       </div>
       <div className="p-5">
         <h3 className="text-xl font-black leading-tight text-[var(--ink)]">

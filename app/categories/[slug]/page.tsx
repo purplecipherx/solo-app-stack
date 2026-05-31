@@ -10,7 +10,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({params}: {params: Promise<{slug: string}>}): Promise<Metadata> {
   const category = await getCategory((await params).slug);
-  return category ? {title: category.title, description: category.description} : {};
+  return category ? {title: category.title, description: category.description, alternates: {canonical: `/categories/${category.slug}`}} : {};
 }
 
 export default async function CategoryPage({params}: {params: Promise<{slug: string}>}) {
