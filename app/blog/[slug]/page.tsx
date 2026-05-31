@@ -9,8 +9,10 @@ import {PostCard} from "@/components/PostCard";
 import {RenderBody} from "@/components/RenderBody";
 import {ScriptJsonLd} from "@/components/ScriptJsonLd";
 import {TableOfContents} from "@/components/TableOfContents";
+import {ToolCard} from "@/components/ToolCard";
+import {ToolLogoStrip} from "@/components/ToolLogoStrip";
 import {blogPostingJsonLd, breadcrumbJsonLd, faqJsonLd} from "@/lib/schema";
-import {getPost, getPosts} from "@/lib/content";
+import {getPost, getPosts, getTools} from "@/lib/content";
 import {absoluteUrl} from "@/lib/site";
 import {formatDate} from "@/lib/utils";
 
@@ -45,8 +47,9 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
   const {slug} = await params;
   const post = await getPost(slug);
   if (!post) notFound();
-  const allPosts = await getPosts();
+  const [allPosts, tools] = await Promise.all([getPosts(), getTools()]);
   const related = allPosts.filter((item) => post.relatedPosts.includes(item.slug)).slice(0, 3);
+  const mentionedTools = tools.filter((tool) => post.relatedTools.includes(tool.slug));
   return (
     <article className="mx-auto max-w-6xl px-4 py-10">
       <ScriptJsonLd data={blogPostingJsonLd(post)} />
@@ -65,6 +68,7 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
                 <div className="text-sm font-black uppercase tracking-normal text-[#f6c453]">{post.category}</div>
                 <h1 className="mt-3 max-w-3xl text-4xl font-black leading-tight md:text-5xl">{post.title}</h1>
                 <p className="mt-4 max-w-3xl text-lg leading-8 text-[#edf5ef]">{post.excerpt}</p>
+                <ToolLogoStrip tools={mentionedTools} />
               </div>
             </div>
             <div className="flex flex-wrap gap-3 border-t border-[var(--line)] p-5 text-sm font-semibold text-[var(--muted)]">
@@ -75,6 +79,14 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
             </div>
           </div>
           <div className="mt-6"><AffiliateDisclosure /></div>
+          {mentionedTools.length ? (
+            <section className="mt-8">
+              <h2 className="mb-4 text-2xl font-black text-[var(--ink)]">Tools mentioned in this guide</h2>
+              <div className="grid gap-4 md:grid-cols-2">
+                {mentionedTools.map((tool) => <ToolCard key={tool.slug} tool={tool} />)}
+              </div>
+            </section>
+          ) : null}
           <div className="mt-8"><RenderBody body={post.body} /></div>
           <section className="mt-10">
             <h2 className="mb-4 text-2xl font-black text-[var(--ink)]">FAQ</h2>

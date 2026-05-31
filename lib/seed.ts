@@ -2,7 +2,7 @@ import type {Category, Comparison, Post, ToolkitItem, Tool} from "./types";
 
 const author = {name: "Solo App Stack Editorial", role: "Tool testing and buyer guides"};
 
-const categoryImages: Record<string, {src: string; alt: string}> = {
+export const categoryImages: Record<string, {src: string; alt: string}> = {
   "AI Tools": {src: "/images/posts/ai-tools-cover.webp", alt: "AI assistant workspace for a one-person business"},
   "Scheduling & Booking": {src: "/images/posts/scheduling-cover.webp", alt: "Scheduling app workspace with calendar and booking tools"},
   "Taxes & Mileage": {src: "/images/posts/mileage-tax-cover.webp", alt: "Mileage tracking and tax app workspace for gig workers"},
@@ -10,6 +10,24 @@ const categoryImages: Record<string, {src: string; alt: string}> = {
   "Websites & Hosting": {src: "/images/posts/website-crm-cover.webp", alt: "Website builder and CRM workspace for local service businesses"},
   "Business Apps": {src: "/images/posts/website-crm-cover.webp", alt: "CRM and lead tracking workspace for solo operators"},
   "Reviews & Comparisons": {src: "/images/posts/ai-tools-cover.webp", alt: "Software comparison workspace for solo operators"}
+};
+
+const postImages: Record<string, {src: string; alt: string}> = {
+  "best-ai-tools-for-one-person-businesses": {src: "/images/tools/chatgpt-review.webp", alt: "AI assistant tools workspace for one-person businesses"},
+  "best-ai-email-assistants-for-freelancers": {src: "/images/tools/chatgpt-review.webp", alt: "AI email assistant product workspace for freelancers"},
+  "chatgpt-vs-claude-for-solo-operators": {src: "/images/tools/chatgpt-review.webp", alt: "AI assistant comparison workspace for ChatGPT and Claude"},
+  "best-scheduling-apps-for-solo-service-businesses": {src: "/images/tools/calendly-review.webp", alt: "Scheduling app comparison workspace for solo service businesses"},
+  "calendly-vs-acuity-for-service-pros": {src: "/images/tools/calendly-review.webp", alt: "Calendly and Acuity scheduling comparison workspace"},
+  "cheap-booking-stack-for-mobile-local-businesses": {src: "/images/tools/calendly-review.webp", alt: "Booking and scheduling product workspace for mobile local businesses"},
+  "best-mileage-tracker-apps-for-gig-workers": {src: "/images/tools/everlance-review.webp", alt: "Mileage tracker app workspace for gig workers"},
+  "best-tax-apps-for-side-hustlers": {src: "/images/tools/everlance-review.webp", alt: "Tax and mileage tracking product workspace for side hustlers"},
+  "mileiq-vs-everlance-for-drivers": {src: "/images/tools/everlance-review.webp", alt: "Mileage app comparison workspace for drivers"},
+  "best-invoicing-software-for-freelancers": {src: "/images/tools/freshbooks-review.webp", alt: "Invoicing software workspace for freelancers"},
+  "wave-vs-freshbooks-for-solo-operators": {src: "/images/tools/freshbooks-review.webp", alt: "Wave and FreshBooks invoicing comparison workspace"},
+  "cheapest-payment-stack-for-one-person-businesses": {src: "/images/tools/freshbooks-review.webp", alt: "Payment and invoicing product workspace for one-person businesses"},
+  "best-website-builders-for-local-service-businesses": {src: "/images/tools/carrd-review.webp", alt: "Website builder workspace for local service businesses"},
+  "best-cheap-crm-for-solo-operators": {src: "/images/tools/carrd-review.webp", alt: "Website and lead tracking product workspace for solo operators"},
+  "website-builder-vs-wordpress-for-solo-service-businesses": {src: "/images/tools/carrd-review.webp", alt: "Website builder and WordPress comparison workspace"}
 };
 
 export const categories: Category[] = [
@@ -162,8 +180,8 @@ export const posts: Post[] = postPlan.map(([slug, title, category, toolNames], i
   seoTitle: `${title} | Solo App Stack`,
   metaDescription: `A practical, beginner-friendly guide to ${title.toLowerCase()} with picks, tradeoffs, pricing notes, and setup advice for solo operators.`,
   excerpt: `A no-fluff buyer guide for solo operators comparing ${toolNames.join(", ")} and the situations where each one makes sense.`,
-  featuredImage: categoryImages[category]?.src || "/images/posts/website-crm-cover.webp",
-  featuredImageAlt: categoryImages[category]?.alt || "Software stack workspace for solo operators",
+  featuredImage: postImages[slug]?.src || "/images/tools/chatgpt-review.webp",
+  featuredImageAlt: postImages[slug]?.alt || "Product image for software tools mentioned in this guide",
   category,
   tags: [category, "solo business", "software stack"],
   author,
