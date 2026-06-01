@@ -17,6 +17,7 @@ const funnelStageSchema = z.enum(["top", "middle", "bottom"]);
 const schemaTypeSchema = z.enum(["BlogPosting", "FAQPage", "BreadcrumbList", "SoftwareApplication", "Product"]);
 
 const dateString = z.string().refine((value) => !Number.isNaN(Date.parse(value)), "Invalid date string");
+const timeString = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Time must be HH:mm in 24-hour format");
 
 const blogPostSeedSchema = z.object({
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug must be lowercase kebab-case"),
@@ -69,9 +70,12 @@ const blogBatchSchema = z.object({
   defaultAuthor: z.string().default("Solo App Stack Editorial"),
   defaultStatus: statusSchema.default("draft"),
   schedule: z.object({
+    mode: z.enum(["fixedSpacing", "spreadSinceLastPublished", "futureSlots"]).default("fixedSpacing"),
     startAfterLastPublished: z.boolean().default(true),
     fallbackStartDate: dateString,
-    spacingDays: z.number().int().positive().default(2)
+    spacingDays: z.number().int().positive().default(2),
+    futureStartDate: dateString.optional(),
+    dailyTimes: z.array(timeString).default(["08:00", "12:00", "16:00", "20:00"])
   }),
   posts: z.array(blogPostSeedSchema)
 }).superRefine((batch, context) => {
@@ -105,8 +109,62 @@ function addDays(date: Date, days: number) {
   return next;
 }
 
+function addMs(date: Date, ms: number) {
+  return new Date(date.getTime() + ms);
+}
+
 function toIsoDate(value: string | Date) {
   return new Date(value).toISOString();
+}
+
+function datePart(date: Date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function localSlot(date: Date, time: string) {
+  return new Date(`${datePart(date)}T${time}:00`);
+}
+
+function autoScheduleDates(batch: BlogBatch, latestPublishedAt: string | null, count: number) {
+  if (count === 0) return [];
+
+  const now = new Date();
+  const fallbackStart = new Date(batch.schedule.fallbackStartDate);
+  const useLatest = Boolean(latestPublishedAt && batch.schedule.startAfterLastPublished);
+  const latestDate = latestPublishedAt ? new Date(latestPublishedAt) : null;
+  const baseDate = useLatest && latestDate ? latestDate : fallbackStart;
+
+  if (batch.schedule.mode === "spreadSinceLastPublished") {
+    const start = baseDate;
+    const end = now;
+    if (end.getTime() > start.getTime()) {
+      const interval = (end.getTime() - start.getTime()) / (count + 1);
+      return Array.from({length: count}, (_, index) => addMs(start, interval * (index + 1)));
+    }
+  }
+
+  if (batch.schedule.mode === "futureSlots") {
+    const start = new Date(batch.schedule.futureStartDate || batch.schedule.fallbackStartDate);
+    const times = [...batch.schedule.dailyTimes].sort();
+    const dates: Date[] = [];
+    let cursor = start;
+    while (dates.length < count) {
+      for (const time of times) {
+        const slot = localSlot(cursor, time);
+        if (slot.getTime() >= now.getTime()) {
+          dates.push(slot);
+          if (dates.length === count) break;
+        }
+      }
+      cursor = addDays(cursor, 1);
+    }
+    return dates;
+  }
+
+  const firstScheduledDate = useLatest
+    ? addDays(baseDate, batch.schedule.spacingDays)
+    : fallbackStart;
+  return Array.from({length: count}, (_, index) => addDays(firstScheduledDate, index * batch.schedule.spacingDays));
 }
 
 let keyCounter = 0;
@@ -333,13 +391,15 @@ async function main() {
 
   const client = createClient({projectId, dataset, token, apiVersion: "2026-05-30", useCdn: false});
   const latestPublishedAt = await client.fetch<string | null>(`*[_type == "post" && defined(publishedAt)] | order(publishedAt desc)[0].publishedAt`);
-  const useLatest = Boolean(latestPublishedAt && batch.schedule.startAfterLastPublished);
-  const firstScheduledDate = useLatest
-    ? addDays(new Date(latestPublishedAt as string), batch.schedule.spacingDays)
-    : new Date(batch.schedule.fallbackStartDate);
+  const autoScheduledPosts = batch.posts.filter((post) => !post.dates.publishedAt);
+  const plannedAutoDates = autoScheduleDates(batch, latestPublishedAt, autoScheduledPosts.length);
 
   console.log(`${dryRun ? "Dry run" : "Importing"} ${batch.posts.length} posts from ${batch.batchId}`);
-  console.log(`Schedule start: ${firstScheduledDate.toISOString().slice(0, 10)} (${useLatest ? "after latest Sanity post" : "fallback start date"})`);
+  console.log(`Schedule mode: ${batch.schedule.mode}`);
+  console.log(`Latest Sanity publishedAt: ${latestPublishedAt || "none"}`);
+  if (plannedAutoDates.length) {
+    console.log(`Auto schedule window: ${plannedAutoDates[0].toISOString()} -> ${plannedAutoDates[plannedAutoDates.length - 1].toISOString()}`);
+  }
 
   const authorRef = await upsertAuthor(client, batch.defaultAuthor, dryRun);
   let autoScheduledIndex = 0;
@@ -356,7 +416,7 @@ async function main() {
     const explicitPublishedAt = post.dates.publishedAt;
     const publishedAt = explicitPublishedAt
       ? toIsoDate(explicitPublishedAt)
-      : toIsoDate(addDays(firstScheduledDate, autoScheduledIndex++ * batch.schedule.spacingDays));
+      : toIsoDate(plannedAutoDates[autoScheduledIndex++]);
     const updatedAt = post.dates.updatedAt ? toIsoDate(post.dates.updatedAt) : publishedAt;
     const existingId = await existingDocumentId(client, "post", post.slug);
     const document = buildPostDocument(post, batch, authorRef, categoryRef, body, publishedAt, updatedAt);

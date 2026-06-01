@@ -92,11 +92,34 @@ The importer also:
 - validates batches with `zod`
 - creates missing author/category documents
 - preserves explicit `publishedAt` dates
-- schedules missing `publishedAt` dates after the latest existing Sanity post
+- schedules missing `publishedAt` dates by batch schedule mode
 - stores external featured image URL, alt, credit, and license
 - stores affiliate, SEO, intent, funnel, monetization, and internal link metadata
 
 Sanity is the source of truth for production. The live blog does not render directly from local Markdown.
+
+### Scheduling Modes
+
+Use `schedule.mode` in the batch JSON:
+
+```json
+"schedule": {
+  "mode": "spreadSinceLastPublished",
+  "startAfterLastPublished": true,
+  "fallbackStartDate": "2026-06-01",
+  "spacingDays": 2,
+  "futureStartDate": "2026-06-10",
+  "dailyTimes": ["08:00", "12:00", "16:00", "20:00"]
+}
+```
+
+Modes:
+
+- `fixedSpacing`: old behavior. Missing dates start after the latest Sanity post, or `fallbackStartDate`, then use `spacingDays`.
+- `spreadSinceLastPublished`: backfills missing dates evenly between the latest Sanity `publishedAt` and the current import time. Good for importing a batch and making it look naturally spread out since the last import/post.
+- `futureSlots`: schedules missing dates into future posting slots using `futureStartDate` and `dailyTimes`. Good for loading a queue of upcoming posts.
+
+Explicit `dates.publishedAt` values on individual posts are always preserved. Only missing/null `publishedAt` values are auto-scheduled.
 
 ## Deploy to Vercel
 
