@@ -1,0 +1,12 @@
+{
+  "batchId": "batch-001",
+  "site": "Solo App Stack",
+  "defaultAuthor": "Solo App Stack Editorial",
+  "defaultStatus": "draft",
+  "schedule": {
+    "startAfterLastPublished": true,
+    "fallbackStartDate": "2026-06-01",
+    "spacingDays": 2
+  },
+  "posts": []
+}

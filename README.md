@@ -30,8 +30,10 @@ Copy `.env.example` to `.env.local` and fill in:
 NEXT_PUBLIC_SANITY_PROJECT_ID=
 NEXT_PUBLIC_SANITY_DATASET=production
 SANITY_API_READ_TOKEN=
+SANITY_API_WRITE_TOKEN=
 NEXT_PUBLIC_SITE_URL=https://soloappstack.com
 NEXT_PUBLIC_GA_ID=
+NEXT_PUBLIC_PLAUSIBLE_DOMAIN=soloappstack.com
 ```
 
 The site includes local fallback seed content, so pages render before Sanity is connected.
@@ -57,6 +59,44 @@ npm run seed:sanity
 ```
 
 The seed data includes placeholder affiliate URLs. Replace them with approved partner URLs before launch.
+
+## Importing Blog Posts
+
+Use JSON batch files for metadata and separate Markdown files for article bodies:
+
+```text
+content/
+  batches/
+    batch-001.json
+  posts/
+    batch-001/
+      best-website-builder-for-cleaners.md
+```
+
+Run a dry run first:
+
+```bash
+npm run import:posts -- content/batches/batch-001.json --dry-run
+```
+
+Import into Sanity:
+
+```bash
+npm run import:posts -- content/batches/batch-001.json
+```
+
+The batch JSON `body.source` field points to the Markdown file. The importer reads the Markdown file programmatically, converts it to Sanity Portable Text, and upserts the post into Sanity by slug. Re-running the same batch updates existing posts instead of creating duplicates.
+
+The importer also:
+
+- validates batches with `zod`
+- creates missing author/category documents
+- preserves explicit `publishedAt` dates
+- schedules missing `publishedAt` dates after the latest existing Sanity post
+- stores external featured image URL, alt, credit, and license
+- stores affiliate, SEO, intent, funnel, monetization, and internal link metadata
+
+Sanity is the source of truth for production. The live blog does not render directly from local Markdown.
 
 ## Deploy to Vercel
 

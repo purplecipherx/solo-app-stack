@@ -3,10 +3,10 @@ import {categories, comparisons, posts, toolkitItems, tools} from "../lib/seed";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
-const token = process.env.SANITY_API_READ_TOKEN;
+const token = process.env.SANITY_API_WRITE_TOKEN || process.env.SANITY_API_READ_TOKEN;
 
 if (!projectId || !token) {
-  throw new Error("Set NEXT_PUBLIC_SANITY_PROJECT_ID and SANITY_API_READ_TOKEN before seeding.");
+  throw new Error("Set NEXT_PUBLIC_SANITY_PROJECT_ID and SANITY_API_WRITE_TOKEN before seeding.");
 }
 
 const client = createClient({projectId, dataset, token, apiVersion: "2026-05-30", useCdn: false});

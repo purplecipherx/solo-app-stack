@@ -6,7 +6,8 @@ export const site = {
   description:
     "Practical software stacks, AI tools, automation guides, and app comparisons for freelancers, gig workers, and solo local service businesses.",
   email: "hello@soloappstack.com",
-  gaId: process.env.NEXT_PUBLIC_GA_ID
+  gaId: process.env.NEXT_PUBLIC_GA_ID,
+  plausibleDomain: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
 };
 
 export function absoluteUrl(path = "") {

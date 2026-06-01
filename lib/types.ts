@@ -59,9 +59,12 @@ export type Post = {
   excerpt: string;
   featuredImage?: string;
   featuredImageAlt?: string;
+  featuredImageCredit?: string;
+  featuredImageLicense?: string;
   category: string;
   tags: string[];
   author: Author;
+  status?: "draft" | "published";
   publishedAt: string;
   updatedAt: string;
   readingTime: string;
@@ -74,6 +77,16 @@ export type Post = {
   faqs: FAQ[];
   canonicalUrl?: string;
   noindex?: boolean;
+  schemaTypes?: string[];
+  intent?: string;
+  funnelStage?: string;
+  monetization?: string[];
+  affiliateDisclosureRequired?: boolean;
+  hasAffiliateLinks?: boolean;
+  internalLinks?: string[];
+  originalMarkdownSource?: string;
+  importedBatchId?: string;
+  importedAt?: string;
 };
 
 export type Comparison = {

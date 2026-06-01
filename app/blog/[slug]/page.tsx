@@ -78,7 +78,7 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
               <span>{post.readingTime}</span>
             </div>
           </div>
-          <div className="mt-6"><AffiliateDisclosure /></div>
+          {(post.affiliateDisclosureRequired ?? post.affiliateDisclosure) ? <div className="mt-6"><AffiliateDisclosure /></div> : null}
           {mentionedTools.length ? (
             <section className="mt-8">
               <h2 className="mb-4 text-2xl font-black text-[var(--ink)]">Tools mentioned in this guide</h2>
@@ -88,6 +88,23 @@ export default async function BlogPostPage({params}: {params: Promise<{slug: str
             </section>
           ) : null}
           <div className="mt-8"><RenderBody body={post.body} /></div>
+          {post.featuredImageCredit || post.featuredImageLicense ? (
+            <p className="mt-4 text-xs font-semibold text-[var(--muted)]">
+              Image: {[post.featuredImageCredit, post.featuredImageLicense].filter(Boolean).join(" / ")}
+            </p>
+          ) : null}
+          {post.internalLinks?.length ? (
+            <section className="mt-10 rounded-md border border-[var(--line)] bg-[var(--card)] p-5">
+              <h2 className="text-2xl font-black text-[var(--ink)]">Keep building the stack</h2>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {post.internalLinks.map((href) => (
+                  <a key={href} href={href} className="rounded-md border border-[var(--line)] px-3 py-2 text-sm font-bold text-[var(--ink)] hover:border-[var(--accent)]">
+                    {href}
+                  </a>
+                ))}
+              </div>
+            </section>
+          ) : null}
           <section className="mt-10">
             <h2 className="mb-4 text-2xl font-black text-[var(--ink)]">FAQ</h2>
             <FAQAccordion faqs={post.faqs} />

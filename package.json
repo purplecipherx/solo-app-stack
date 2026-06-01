@@ -8,20 +8,28 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "import:posts": "tsx scripts/import-posts.ts",
     "seed:sanity": "tsx scripts/seed-sanity.ts"
   },
   "dependencies": {
     "@portabletext/react": "latest",
+    "@sanity/client": "^7.22.1",
     "@sanity/image-url": "latest",
     "@sanity/vision": "latest",
     "clsx": "latest",
+    "gray-matter": "^4.0.3",
     "lucide-react": "latest",
+    "mdast-util-to-markdown": "^2.1.2",
     "next": "latest",
     "next-sanity": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
     "sanity": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "unified": "^11.0.5",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "latest",

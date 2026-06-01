@@ -37,6 +37,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en">
       <body>
         {site.gaId ? <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.gaId}`} /> : null}
+        {site.plausibleDomain ? <script defer data-domain={site.plausibleDomain} src="https://plausible.io/js/script.js" /> : null}
         <Header />
         <main>{children}</main>
         <Footer />
