@@ -7,10 +7,10 @@ import {site} from "@/lib/site";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   applicationName: site.name,
-  authors: [{name: "Solo App Stack Editorial", url: site.url}],
+  authors: [{name: "Jerf Supply", url: site.url}],
   creator: site.name,
   publisher: site.name,
-  category: "technology",
+  category: "shopping",
   title: {
     default: `${site.name} - ${site.tagline}`,
     template: `%s | ${site.name}`
@@ -22,13 +22,13 @@ export const metadata: Metadata = {
     url: site.url,
     title: site.name,
     description: site.description,
-    images: [{url: "/images/solo-workspace-hero.webp", width: 1792, height: 1024, alt: "Solo App Stack software workspace"}]
+    images: [{url: "/images/jerf-og.png", width: 1792, height: 1024, alt: "Jerf Supply psychedelic studio banner"}]
   },
   twitter: {
     card: "summary_large_image",
     title: site.name,
     description: site.description,
-    images: ["/images/solo-workspace-hero.webp"]
+    images: ["/images/jerf-og.png"]
   }
 };
 
