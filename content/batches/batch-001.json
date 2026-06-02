@@ -4,12 +4,12 @@
   "defaultAuthor": "Solo App Stack Editorial",
   "defaultStatus": "draft",
   "schedule": {
-    "mode": "spreadSinceLastPublished",
+    "mode": "futureSlots",
     "startAfterLastPublished": true,
     "fallbackStartDate": "2026-06-01",
-    "spacingDays": 2,
+    "spacingDays": 1,
     "futureStartDate": "2026-06-01",
-    "dailyTimes": ["08:00", "12:00", "16:00", "20:00"]
+    "dailyTimes": ["08:00", "12:00", "16:00"]
   },
   "posts": []
 }
