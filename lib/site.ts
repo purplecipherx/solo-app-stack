@@ -1,11 +1,11 @@
 export const site = {
-  name: "Solo App Stack",
-  domain: "soloappstack.com",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://soloappstack.com",
-  tagline: "AI tools, apps, and cheap systems for one-person businesses.",
+  name: "Jerf Supply",
+  domain: "jerfsupply.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://jerfsupply.com",
+  tagline: "Real goods. Weird finds. Studio favorites.",
   description:
-    "Practical software stacks, AI tools, automation guides, and app comparisons for freelancers, gig workers, and solo local service businesses.",
-  email: "hello@soloappstack.com",
+    "Official product, sponsor, and brand link hub for Jerf: weird finds, studio favorites, stickers, incense, skate gear, food links, art, and court-safe lifestyle picks.",
+  email: "sponsors@jerfsupply.com",
   gaId: process.env.NEXT_PUBLIC_GA_ID,
   plausibleDomain: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
 };
